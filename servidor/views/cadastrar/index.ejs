@@ -8,13 +8,23 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="/logar" method="post">
-    <label for="user"></label>
+  <form action="/cadastrar" method="post">
+    <label for="user">Nome:</label>
+    <input type="text" name="name" id="name">
+
+  </br>
+
+    <label for="Email">Email</label>
     <input type="text" name="user" id="user">
-    <label for="password"></label>
+
+</br>
+
+    <label for="password">Senha</label>
     <input type="text" name="password" id="password">
 
-    <input type="submit" value="Logar">
+</br>
+
+    <input type="submit" value="Cadastrar">
   </form>
 </body>
 </html>
