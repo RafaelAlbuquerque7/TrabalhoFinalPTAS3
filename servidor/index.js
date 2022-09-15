@@ -25,7 +25,7 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/", "/autenticar", "/deslogar", "/cadastrar", "/logar"] })
+  }).unless({ path: ["/", "/autenticar", "/deslogar", "/logar"] })
 );
 
 app.get('/autenticar', async function(req, res){
@@ -59,7 +59,6 @@ res.json(usuario_);
 
 app.post('/logar', async (req, res) => {
   const buscanobanco = await usuario.findOne({where: {user: req.body.user}});
-  console.log(buscanobanco)
   if(req.body.user === buscanobanco.user && req.body.password === buscanobanco.password){
 
     const id = 1;

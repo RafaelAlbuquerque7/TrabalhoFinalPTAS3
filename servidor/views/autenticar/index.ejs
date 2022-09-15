@@ -8,13 +8,21 @@
   <title>Document</title>
 </head>
 <body>
+  <div class="formulario">
   <form action="/logar" method="post">
-    <label for="user"></label>
+    <h2>Prencha corretamente os campos:</h2>
+    <div class="campos">
+    <label for="user">User:</label>
     <input type="text" name="user" id="user">
-    <label for="password"></label>
+  </br>
+    <label for="password">Password:</label>
     <input type="text" name="password" id="password">
-
-    <input type="submit" value="Logar">
+  </br>
+</div>
+    <input class = "btn" type="submit" value="Logar">
   </form>
+
+</div>
+
 </body>
 </html>
