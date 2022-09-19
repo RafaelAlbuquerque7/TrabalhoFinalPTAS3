@@ -58,7 +58,7 @@ res.json(usuario_);
 })
 
 app.post('/logar', async (req, res) => {
-  const buscanobanco = await usuario.findOne({where: {user: req.body.user}});
+  let buscanobanco = await usuario.findOne({where: {user: req.body.user}});
   if(req.body.user === buscanobanco.user && req.body.password === buscanobanco.password){
 
     const id = 1;
