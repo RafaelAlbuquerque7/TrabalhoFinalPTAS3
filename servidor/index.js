@@ -3,6 +3,7 @@ require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
+const crip = require('./cripts') 
 
 var cookieParser = require('cookie-parser')
 
@@ -53,24 +54,34 @@ app.get('/cadastrar', async function(req, res){
 
 
 app.post('/cadastrar' , async function(req,res){
-const usuario_ = await usuario.create(req.body)
+  const dados = crip.encrypt(req.body.password);
+const usuario_ = usuario.create(
+{
+  name: req.body.name,
+  user:req.body.user,
+  password: dados
+});
+console.log(req.body.name, req.body.user, dados);
 res.json(usuario_);
-})
+});
 
 app.post('/logar', async (req, res) => {
-  let buscanobanco = await usuario.findOne({where: {user: req.body.user}});
-  if(req.body.user === buscanobanco.user && req.body.password === buscanobanco.password){
-
+  const usuario_r = await usuario.findOne({where:{user: req.body.user}});
+  const senha = crip.encrypt(req.body.password);
+  if(usuario_r === null){
+    res.status(500).json({message: 'Login inválido!'});
+  } else if(req.body.user === usuario_r.user && senha === usuario_r.password){
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {
-      expiresIn: 3600 // expires in 1hour
+      expiresIn: 3600 // expires in 1 hour
     });
 
     res.cookie('token', token, { httpOnly: true });
     return res.json({ auth: true, token: token });
+  } else{
+    res.status(500).json({message: 'Login inválido!'});
   }
 
-  res.status(500).json({message: 'Login inválido!'});
 })
 
 app.post('/deslogar', function(req, res) {
